@@ -1,0 +1,6 @@
+
+# Set editor to vim
+export EDITOR='vim'
+export CSCOPE_EDITOR='vim'
+export CSCOPE_DB=./
+

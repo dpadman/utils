@@ -1,0 +1,8 @@
+#!/bin/bash
+set -xv
+rm -fr cscope.*
+find . -name '*.[ch]' -o -name 'Makefile' -o -name '*.gdb' -o -name '*.[sS]' -o -name '*.py' >> cscope.files
+sort cscope.files > cscope.files.sorted
+mv cscope.files.sorted cscope.files
+cscope -q -R -b -i cscope.files 2>/dev/null
+ctags -f tags cscope.files
