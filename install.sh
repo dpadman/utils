@@ -4,7 +4,7 @@
 sudo apt-get update
 sudo apt-get install -y cscope ctags
 sudo apt-get install -y build-essential
-sudo apt-get install -y cmake
+sudo apt-get install -y cmake vim screen
 
 mkdir -p ~/.vim/plugin
 cp cscope_maps.vim ~/.vim/plugin/
