@@ -1,6 +1,9 @@
 # Change the escape key (C-a) to backtick `
 escape ``
 
+term xterm-256color # or screen-256color
+altscreen on
+
 startup_message off
 msgwait 1
 vbell on
