@@ -1,0 +1,180 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# don't put duplicate lines in the history. See bash(1) for more options
+# don't overwrite GNU Midnight Commander's setting of `ignorespace'.
+export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+# ... or force ignoredups and ignorespace
+export HISTCONTROL=ignoreboth
+
+export SHORTNAME=$(hostname -s)
+
+# Set editor to vim
+export EDITOR='vim'
+export CSCOPE_EDITOR='vim'
+
+# ccache exports
+export CC='ccache gcc'
+export CXX='ccache g++'
+export PATH=/usr/local/libexec/ccache:/root/scripts/:$PATH
+export CCACHE_PATH=/usr/bin:/usr/local/bin
+export CCACHE_DIR=/var/tmp/ccache
+export CCACHE_LOGFILE=/var/log/ccache.log
+
+alias vi='vim'
+
+# cscsope exports
+alias bcsc='~/.cs.script;'
+alias gcsc='~/.gcs.script;'
+alias csc='echo -n -e "\033kcsc\033\\"; cscope -d; echo -n -e "\033kcode\033\\";'
+export CSCOPE_DB=./
+
+# gnu screen exports 
+alias nscrn='screen -S'
+alias lscrn='screen -list'
+alias dscrn='screen -wipe'
+alias rscrn='screen -dr'
+alias xscrn='screen -x'
+
+# directory traversal
+alias code='cd /sc/code; echo -n -e "\033kcode\033\\";'
+alias conf='cd /sc/conf; echo -n -e "\033kconf\033\\";'
+alias samp='cd /sc/samples; echo -n -e "\033ksamples\033\\";'
+alias ca1='cd /sc/mi/ca1; echo -n -e "\033kca1\033\\"; export ZSINSTANCE=/sc/mi/ca1'
+alias ca2='cd /sc/mi/ca2; echo -n -e "\033kca2\033\\"; export ZSINSTANCE=/sc/mi/ca2'
+alias sme1='cd /sc/mi/sme1; echo -n -e "\033ksme1\033\\"; export ZSINSTANCE=/sc/mi/sme1'
+alias sme2='cd /sc/mi/sme2; echo -n -e "\033ksme2\033\\"; export ZSINSTANCE=/sc/mi/sme2'
+alias smike1='cd /sc/mi/sme3; echo -n -e "\033ksmike1\033\\"; export ZSINSTANCE=/sc/mi/sme3'
+alias smui1='cd /sc/mi/smui1; echo -n -e "\033ksmui1\033\\"; export ZSINSTANCE=/sc/mi/smui1'
+alias smsm1='cd /sc/mi/smsm1; echo -n -e "\033ksmsm1\033\\"; export ZSINSTANCE=/sc/mi/smsm1'
+alias dbms='cd /sc/mi/smdbms; echo -n -e "\033kdbms\033\\"; export ZSINSTANCE=/sc/mi/smdbms'
+alias dbmc1='cd /sc/mi/smdbmc1; echo -n -e "\033kdbmc1\033\\"; export ZSINSTANCE=/sc/mi/smdbmc1'
+alias dbmc2='cd /sc/mi/smdbmc2; echo -n -e "\033kdbmc2\033\\"; export ZSINSTANCE=/sc/mi/smdbmc2'
+alias db1='cd /sc/conf/db/; echo -n -e "\033kdb1\033\\";'
+alias db2='cd /sc/conf/db2/; echo -n -e "\033kdb2\033\\";'
+alias paclb='cd /sc/mi/paclb/; echo -n -e "\033kpaclb\033\\"; export ZSINSTANCE=/sc/mi/paclb'
+alias pac1='cd /sc/mi/pac1/; echo -n -e "\033kpac1\033\\"; export ZSINSTANCE=/sc/mi/pac1'
+alias pac2='cd /sc/mi/pac2/; echo -n -e "\033kpac2\033\\"; export ZSINSTANCE=/sc/mi/pac2'
+alias pac3='cd /sc/mi/pac3/; echo -n -e "\033kpac3\033\\"; export ZSINSTANCE=/sc/mi/pac3'
+alias sm='bin/smctl.sh'
+alias dbg='set -xv; exec 3>&2 >> $1.log 2>&1'
+
+# postgres exports
+alias pgl='su postgres'
+
+export PATH=/sbin:$PATH
+
+export LD_LIBRARY_PATH=./lib:$LD_LIBRARY_PATH
+
+LS_COLORS=$LS_COLORS:'di=0;35:' ; export LS_COLORS
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+    else
+    color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+#if [ -f ~/.bash_aliases ]; then
+#    . ~/.bash_aliases
+#fi
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    eval "`dircolors -b`"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    #alias grep='grep --color=auto'
+    #alias fgrep='fgrep --color=auto'
+    #alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+#alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+if [ -f ~/.freebsdrc ]; then
+    . ~/.freebsdrc
+fi
+
+if [ -f ~/.svn_aliases ]; then
+    . ~/.svn_aliases
+fi
+
+if [ -f ~/.git_aliases ]; then
+    . ~/.git_aliases
+fi
+
+[ -r $HOME/.alias ] && . $HOME/.alias
+
+[ -r $HOME/.bash_profile_m ] && . $HOME/.bash_profile_m
