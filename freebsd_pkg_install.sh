@@ -7,3 +7,5 @@ pkg_add -r http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/amd64/packag
 pkg_add -r http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/amd64/packages-8.4-release/All/bash-4.2.42.tbz
 pkg_add -r http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/amd64/packages-8.4-release/All/ccache-3.1.9.tbz
 pkg_add -r http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/amd64/packages-8.4-release/All/libtool-2.4.2.tbz
+pkg_add -r http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/amd64/packages-8.4-release/All/gmake-3.82_1.tbz
+cd /usr/ports/archiver/zip; make install clean; cd -;
