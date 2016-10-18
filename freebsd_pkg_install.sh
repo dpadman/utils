@@ -11,4 +11,4 @@ pkg_add -r http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/amd64/packag
 pkg_add -r http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/amd64/packages-8.4-release/All/openjdk-7.17.02_2.tbz
 pkg_add -r http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/amd64/packages-8.3-release/All/tomcat-5.5.35.tbz
 pkg_add -r http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/ports/amd64/packages-8.4-release/All/tomcat-7.0.37_1.tbz
-cd /usr/ports/archiver/zip; make install clean; cd -;
+cd /usr/ports/archivers/zip; make install clean; cd -;
